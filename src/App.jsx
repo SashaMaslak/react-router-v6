@@ -10,8 +10,8 @@ import { Homepage } from 'pages/Homepage';
 import { About } from 'pages/Aboutpage';
 import { Blogpage, blogLoader } from 'pages/Blogpage';
 import { Singlepage, postLoader } from 'pages/Singlepage';
-import { Createpost } from 'pages/Createpost';
-import { Editpost } from 'pages/Editpost';
+import { Createpost, createPostAction } from 'pages/Createpost';
+import { Editpost, updatePostAction } from 'pages/Editpost';
 import { Notfoundpage } from 'pages/Notfoundpage';
 import { Loginpage } from 'pages/Loginpage';
 
@@ -37,7 +37,12 @@ const router = createBrowserRouter(
         errorElement={<Errorpage />}
       />
       <Route path="/posts/:id" element={<Singlepage />} loader={postLoader} />
-      <Route path="/posts/:id/edit" element={<Editpost />} />
+      <Route
+        path="/posts/:id/edit"
+        element={<Editpost />}
+        loader={postLoader}
+        action={updatePostAction}
+      />
       <Route
         path="/posts/new"
         element={
@@ -45,6 +50,7 @@ const router = createBrowserRouter(
             <Createpost />
           </RequireAuth>
         }
+        action={createPostAction}
       />
       <Route path="/login" element={<Loginpage />} />
       <Route path="*" element={<Notfoundpage />} />

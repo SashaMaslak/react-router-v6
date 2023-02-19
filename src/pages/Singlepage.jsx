@@ -17,8 +17,24 @@ const Post = () => {
   );
 };
 
+const Comments = () => {
+  const comments = useAsyncValue();
+  return (
+    <div>
+      <h2>Comments</h2>
+      {comments.map(comment => (
+        <>
+          <h3>{comment.body}</h3>
+          <h4>{comment.body}</h4>
+          <p>{comment.body}</p>
+        </>
+      ))}
+    </div>
+  );
+};
+
 export const Singlepage = () => {
-  const { post, id } = useLoaderData();
+  const { post, id, comments } = useLoaderData();
   const navigate = useNavigate();
 
   const goBack = () => navigate(-1);
@@ -33,6 +49,11 @@ export const Singlepage = () => {
           <Post />
         </Await>
       </Suspense>
+      <Suspense fallback={<h2>Comments are Loading...</h2>}>
+        <Await resolve={comments}>
+          <Comments />
+        </Await>
+      </Suspense>
       <Link to={`/posts/${id}/edit`}>Edit this post</Link>
     </div>
   );
@@ -43,10 +64,17 @@ async function getPostById(id) {
   return res.json();
 }
 
+async function getCommentsById(id) {
+  const res = await fetch(
+    `https://jsonplaceholder.typicode.com/posts/${id}/comments`
+  );
+  return res.json();
+}
+
 export const postLoader = async ({ params }) => {
   const id = params.id;
 
-  return { post: getPostById(id), id };
+  return { post: await getPostById(id), id, comments: getCommentsById(id) };
 };
 
 // import { useParams, Link, useNavigate } from 'react-router-dom'

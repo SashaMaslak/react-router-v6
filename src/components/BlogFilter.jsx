@@ -34,7 +34,7 @@ export const BlogFilter = ({ setSearchParams, postQuery, latest }) => {
         />
         New only
       </label>
-      <input type="submit" name="Search" />
+      <input type="submit" name="Search" value="Selected" />
     </form>
   );
 };
