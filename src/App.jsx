@@ -19,6 +19,7 @@ import { Layout } from 'components/Layout';
 
 import { RequireAuth } from 'hoc/RequireAuth';
 import { AuthProvider } from 'hoc/AuthProvider';
+import { Errorpage } from 'pages/Errorpage';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,7 +30,12 @@ const router = createBrowserRouter(
         <Route path="team" element={<p>Our team</p>} />
       </Route>
       <Route path="/about-us" element={<Navigate to="/about" replace />} />
-      <Route path="/posts" element={<Blogpage />} loader={blogLoader} />
+      <Route
+        path="/posts"
+        element={<Blogpage />}
+        loader={blogLoader}
+        errorElement={<Errorpage />}
+      />
       <Route path="/posts/:id" element={<Singlepage />} loader={postLoader} />
       <Route path="/posts/:id/edit" element={<Editpost />} />
       <Route
